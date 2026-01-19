@@ -39,7 +39,7 @@ public class App {
         server.setExecutor(Executors.newFixedThreadPool(4));
         server.start();
 
-        System.out.println("Started java-demo-api on port " + port + " at " + Instant.now());
+        System.out.println("Started kubernetes-demo-java-api on port " + port + " at " + Instant.now());
 
         // Log every 5 minutes
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();

@@ -28,7 +28,7 @@ jobs:
       - name: Build and push
         run: |
           OWNER_LC="$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')"
-          IMAGE="ghcr.io/${OWNER_LC}/java-demo-api"
+          IMAGE="ghcr.io/${OWNER_LC}/kubernetes-demo-java-api"
           TAG="$(date -u +%Y%m%d%H%M%S)-${GITHUB_SHA::7}"
 
           docker buildx build \
