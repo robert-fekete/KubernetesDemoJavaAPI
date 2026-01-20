@@ -42,16 +42,6 @@ public class App {
 
         System.out.println("Started kubernetes-demo-java-api on port " + port + " at " + Instant.now());
 
-        // Deterministic crash to force a Kubernetes crash loop
-        ScheduledExecutorService crashScheduler = Executors.newSingleThreadScheduledExecutor();
-        crashScheduler.schedule(
-                () -> {
-                    System.err.println("Intentional crash to simulate crash loop @ " + Instant.now());
-                    System.exit(1);
-                },
-                2,
-                TimeUnit.SECONDS);
-
         // Log every 5 minutes
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
         scheduler.scheduleAtFixedRate(
