@@ -28,6 +28,13 @@ public class App {
         });
 
         server.createContext("/health", exchange -> {
+
+            // Adding busy spin to simulate struggling app
+            long spinUntil = System.nanoTime() + TimeUnit.SECONDS.toNanos(60);
+            while (System.nanoTime() < spinUntil) {
+                Thread.onSpinWait();
+            }
+
             byte[] body = "ok\n".getBytes(StandardCharsets.UTF_8);
             exchange.getResponseHeaders().add("Content-Type", "text/plain; charset=utf-8");
             exchange.sendResponseHeaders(200, body.length);
@@ -47,8 +54,7 @@ public class App {
                 () -> System.out.println("Hello World @ " + Instant.now()),
                 0,
                 5,
-                TimeUnit.MINUTES
-        );
+                TimeUnit.MINUTES);
 
         // Keep main thread alive
         try {
