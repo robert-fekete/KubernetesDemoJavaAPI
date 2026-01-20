@@ -10,6 +10,7 @@ import java.time.Instant;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class App {
     public static void main(String[] args) throws IOException {
@@ -28,11 +29,9 @@ public class App {
         });
 
         server.createContext("/health", exchange -> {
-
-            // Adding busy spin to simulate struggling app
-            long spinUntil = System.nanoTime() + TimeUnit.SECONDS.toNanos(60);
-            while (System.nanoTime() < spinUntil) {
-                Thread.onSpinWait();
+            if (ThreadLocalRandom.current().nextInt(3) == 0) {
+                System.err.println("unexpected error in /health @ " + Instant.now());
+                throw new RuntimeException("unexpected error");
             }
 
             byte[] body = "ok\n".getBytes(StandardCharsets.UTF_8);
