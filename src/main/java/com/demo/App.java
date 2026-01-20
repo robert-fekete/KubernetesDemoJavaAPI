@@ -29,19 +29,6 @@ public class App {
         });
 
         server.createContext("/health", exchange -> {
-            if (ThreadLocalRandom.current().nextInt(10) == 0) {
-                System.err.println("Simulated slowness in /health @ " + Instant.now());
-                try {
-                    Thread.sleep(5_000);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                    System.err.println("Interrupted during simulated slowness in /health @ " + Instant.now());
-                    exchange.sendResponseHeaders(500, -1);
-                    exchange.close();
-                    return;
-                }
-            }
-
             byte[] body = "ok\n".getBytes(StandardCharsets.UTF_8);
             exchange.getResponseHeaders().add("Content-Type", "text/plain; charset=utf-8");
             exchange.sendResponseHeaders(200, body.length);
