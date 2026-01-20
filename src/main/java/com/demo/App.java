@@ -37,7 +37,7 @@ public class App {
             }
         });
 
-        server.setExecutor(Executors.newFixedThreadPool(4));
+        server.setExecutor(Executors.newFixedThreadPool(16));
         server.start();
 
         System.out.println("Started kubernetes-demo-java-api on port " + port + " at " + Instant.now());
